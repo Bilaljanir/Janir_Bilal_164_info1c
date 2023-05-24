@@ -66,7 +66,7 @@ Test : exemple: cliquer sur le menu "Films/Genres" puis cliquer sur le bouton "E
 
 Paramètres : sans
 
-But : Editer(update) un genre qui a été sélectionné dans le formulaire "genres_afficher.html"
+But : Editer(update) un genres qui a été sélectionné dans le formulaire "genres_afficher.html"
 
 Remarque :  Dans le champ "nom_film_update_wtf" du formulaire "films/films_update_wtf.html",
             le contrôle de la saisie s'effectue ici en Python.
@@ -116,14 +116,14 @@ def film_update_wtf():
             # Afficher seulement le film modifié, "ASC" et l'"id_film_update"
             return redirect(url_for('films_genres_afficher', id_film_sel=id_film_update))
         elif request.method == "GET":
-            # Opération sur la BD pour récupérer "id_film" et "intitule_genre" de la "t_genre"
+            # Opération sur la BD pour récupérer "id_film" et "user_name" de la "t_User"
             str_sql_id_film = "SELECT * FROM t_film WHERE id_film = %(value_id_film)s"
             valeur_select_dictionnaire = {"value_id_film": id_film_update}
             with DBconnection() as mybd_conn:
                 mybd_conn.execute(str_sql_id_film, valeur_select_dictionnaire)
-            # Une seule valeur est suffisante "fetchone()", vu qu'il n'y a qu'un seul champ "nom genre" pour l'UPDATE
+            # Une seule valeur est suffisante "fetchone()", vu qu'il n'y a qu'un seul champ "nom genres" pour l'UPDATE
             data_film = mybd_conn.fetchone()
-            print("data_film ", data_film, " type ", type(data_film), " genre ",
+            print("data_film ", data_film, " type ", type(data_film), " genres ",
                   data_film["nom_film"])
 
             # Afficher la valeur sélectionnée dans le champ du formulaire "film_update_wtf.html"
@@ -179,7 +179,7 @@ def film_delete_wtf():
 
             flash(f"Effacer le film de façon définitive de la BD !!!", "danger")
             # L'utilisateur vient de cliquer sur le bouton de confirmation pour effacer...
-            # On affiche le bouton "Effacer genre" qui va irrémédiablement EFFACER le genre
+            # On affiche le bouton "Effacer genres" qui va irrémédiablement EFFACER le genres
             btn_submit_del = True
 
         # L'utilisateur a vraiment décidé d'effacer.

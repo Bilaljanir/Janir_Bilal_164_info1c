@@ -33,7 +33,7 @@ from APP_FILMS_164.essais_wtf_forms.wtf_forms_demo_select import DemoFormSelectW
 @app.route("/demo_select_wtf", methods=['GET', 'POST'])
 def demo_select_wtf():
     genre_selectionne = None
-    # Objet formulaire pour montrer une liste déroulante basé su    r la table "t_genre"
+    # Objet formulaire pour montrer une liste déroulante basé su    r la table "t_User"
     form_demo = DemoFormSelectWTF()
     try:
         print("form_demo.submit_btn_ok_dplist_genre.data  ", form_demo.submit_btn_ok_dplist_genre.data)
@@ -53,7 +53,7 @@ def demo_select_wtf():
 
         if request.method == "GET":
             with DBconnection() as mc_afficher:
-                strsql_genres_afficher = """SELECT id_genre, intitule_genre FROM t_genre ORDER BY id_genre ASC"""
+                strsql_genres_afficher = """SELECT id_User, user_name FROM t_User ORDER BY id_User ASC"""
                 mc_afficher.execute(strsql_genres_afficher)
 
             data_genres = mc_afficher.fetchall()
@@ -67,10 +67,10 @@ def demo_select_wtf():
             """
             genre_val_list_dropdown = []
             for i in data_genres:
-                genre_val_list_dropdown.append(i['intitule_genre'])
+                genre_val_list_dropdown.append(i['user_name'])
 
             # Aussi possible d'avoir un id numérique et un texte en correspondance
-            # genre_val_list_dropdown = [(i["id_genre"], i["intitule_genre"]) for i in data_genres]
+            # genre_val_list_dropdown = [(i["id_User"], i["user_name"]) for i in data_genres]
 
             print("genre_val_list_dropdown ", genre_val_list_dropdown)
 
@@ -79,7 +79,7 @@ def demo_select_wtf():
             # Ceci est simplement une petite démo. on fixe la valeur PRESELECTIONNEE de la liste
             form_demo.genres_dropdown_wtf.data = "philosophique"
             genre_selectionne = form_demo.genres_dropdown_wtf.data
-            print("genre choisi dans la liste :", genre_selectionne)
+            print("genres choisi dans la liste :", genre_selectionne)
             session['genre_selectionne_get'] = genre_selectionne
 
     # OM 2020.04.16 ATTENTION à l'ordre des excepts, il est très important de respecter l'ordre.
@@ -111,7 +111,7 @@ def demo_select_wtf():
 
 @app.route("/demo_select_dropdown_bootstrap", methods=['GET', 'POST'])
 def demo_select_dropdown_bootstrap():
-    print("genre choisi dans la liste :")
+    print("genres choisi dans la liste :")
     if request.method == 'POST':
         choix_list_drop_down = request.form.getlist("ma_petite_liste_unique")
         print("choix_list_drop_down ", choix_list_drop_down)
@@ -129,7 +129,7 @@ def demo_select_dropdown_bootstrap():
         print("choix_list_drop_down request data ", request.data)
 
         for x in choix_list_drop_down:
-            print("x", x, "genre ", choix_list_drop_down)
+            print("x", x, "genres ", choix_list_drop_down)
 
     return render_template("zzz_essais_om_104/essai_form_result_dropdown.html",
                            my_choice_dropdown=x,
