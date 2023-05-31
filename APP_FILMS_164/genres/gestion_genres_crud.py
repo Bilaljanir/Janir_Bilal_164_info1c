@@ -15,6 +15,7 @@ from APP_FILMS_164.erreurs.exceptions import *
 from APP_FILMS_164.genres.gestion_genres_wtf_forms import FormWTFAjouterGenres
 from APP_FILMS_164.genres.gestion_genres_wtf_forms import FormWTFDeleteGenre
 from APP_FILMS_164.genres.gestion_genres_wtf_forms import FormWTFUpdateGenre
+from flask import render_template
 
 """
     Auteur : OM 2021.03.16
@@ -43,11 +44,11 @@ def genres_afficher(order_by, id_genre_sel):
                     # donc, je précise les champs à afficher
                     # Constitution d'un dictionnaire pour associer l'id du genre sélectionné avec un nom de variable
                     valeur_id_genre_selected_dictionnaire = {"value_id_genre_selected": id_genre_sel}
-                    strsql_genres_afficher = """SELECT id_categories, name_categories  FROM t_categories WHERE id_categories = %(value_id_genre_selected)s"""
+                    strsql_genres_afficher = """SELECT id_categorie, nom_categorie  FROM t_categories WHERE id_categorie = %(value_id_genre_selected)s"""
 
                     mc_afficher.execute(strsql_genres_afficher, valeur_id_genre_selected_dictionnaire)
                 else:
-                    strsql_genres_afficher = """SELECT id_categories, name_categories  FROM t_categories ORDER BY id_categories DESC"""
+                    strsql_genres_afficher = """SELECT id_categorie, nom_categorie  FROM t_categories ORDER BY id_categorie DESC"""
 
                     mc_afficher.execute(strsql_genres_afficher)
 
@@ -107,7 +108,7 @@ def genres_ajouter_wtf():
                 valeurs_insertion_dictionnaire = {"value_intitule_genre": name_genre}
                 print("valeurs_insertion_dictionnaire ", valeurs_insertion_dictionnaire)
 
-                strsql_insert_genre = """INSERT INTO t_categories (id_categories,name_categories) VALUES (NULL,%(value_intitule_genre)s)"""
+                strsql_insert_genre = """INSERT INTO t_categories (id_categorie,nom_categorie) VALUES (NULL,%(value_intitule_genre)s)"""
                 with DBconnection() as mconn_bd:
                     mconn_bd.execute(strsql_insert_genre, valeurs_insertion_dictionnaire)
 
@@ -165,7 +166,7 @@ def genre_update_wtf():
                                           }
             print("valeur_update_dictionnaire ", valeur_update_dictionnaire)
 
-            str_sql_update_intitulegenre = """UPDATE t_categories SET name_categories = %(value_name_genre)s WHERE id_categories = %(value_id_genre)s"""
+            str_sql_update_intitulegenre = """UPDATE t_categories SET nom_categorie = %(value_name_genre)s WHERE id_categorie = %(value_id_genre)s"""
             with DBconnection() as mconn_bd:
                 mconn_bd.execute(str_sql_update_intitulegenre, valeur_update_dictionnaire)
 
@@ -177,8 +178,8 @@ def genre_update_wtf():
             return redirect(url_for('genres_afficher', order_by="ASC", id_genre_sel=id_genre_update))
         elif request.method == "GET":
             # Opération sur la BD pour récupérer "id_genre" et "intitule_genre" de la "t_genre"
-            str_sql_id_genre = "SELECT id_categories, name_categories FROM t_categories " \
-                               "WHERE id_categories = %(value_id_genre)s"
+            str_sql_id_genre = "SELECT id_categorie, nom_categorie FROM t_categories " \
+                               "WHERE id_categorie = %(value_id_genre)s"
             valeur_select_dictionnaire = {"value_id_genre": id_genre_update}
             print(valeur_select_dictionnaire)
             with DBconnection() as mybd_conn:
@@ -246,7 +247,7 @@ def genre_delete_wtf():
                 valeur_delete_dictionnaire = {"value_id_genre": id_genre_delete}
                 print("valeur_delete_dictionnaire ", valeur_delete_dictionnaire)
 
-                str_sql_delete_films_genre = """DELETE FROM t_categories WHERE fk_categories = %(value_id_genre)s"""
+                str_sql_delete_films_genre = """DELETE FROM t_categoriesDepense WHERE fk_categories = %(value_id_genre)s"""
                 str_sql_delete_idgenre = """DELETE FROM t_categories     WHERE id_categories = %(value_id_genre)s"""
                 # Manière brutale d'effacer d'abord la "fk_genre", même si elle n'existe pas dans la "t_genre_film"
                 # Ensuite on peut effacer le genre vu qu'il n'est plus "lié" (INNODB) dans la "t_genre_film"
