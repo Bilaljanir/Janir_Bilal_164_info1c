@@ -51,7 +51,7 @@ class FormWTFDeleteGenre(FlaskForm):
         nom_genre_delete_wtf : Champ qui reçoit la valeur du genres, lecture seule. (readonly=true)
         submit_btn_del : Bouton d'effacement "DEFINITIF".
         submit_btn_conf_del : Bouton de confirmation pour effacer un "genres".
-        submit_btn_annuler : Bouton qui permet d'afficher la table "t_User".
+        submit_btn_annuler : Bouton qui permet d'afficher la table "t_categories".
     """
     nom_genre_delete_wtf = StringField("Effacer ce genres")
     submit_btn_del = SubmitField("Effacer genres")

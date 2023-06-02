@@ -33,7 +33,7 @@ from APP_FILMS_164.essais_wtf_forms.wtf_forms_demo_select import DemoFormSelectW
 @app.route("/demo_select_wtf", methods=['GET', 'POST'])
 def demo_select_wtf():
     genre_selectionne = None
-    # Objet formulaire pour montrer une liste déroulante basé su    r la table "t_User"
+    # Objet formulaire pour montrer une liste déroulante basé su    r la table "t_categories"
     form_demo = DemoFormSelectWTF()
     try:
         print("form_demo.submit_btn_ok_dplist_genre.data  ", form_demo.submit_btn_ok_dplist_genre.data)
@@ -53,7 +53,7 @@ def demo_select_wtf():
 
         if request.method == "GET":
             with DBconnection() as mc_afficher:
-                strsql_genres_afficher = """SELECT id_User, user_name FROM t_User ORDER BY id_User ASC"""
+                strsql_genres_afficher = """SELECT id_categorie, nom_categorie FROM t_categories ORDER BY id_categorie ASC"""
                 mc_afficher.execute(strsql_genres_afficher)
 
             data_genres = mc_afficher.fetchall()
@@ -67,10 +67,10 @@ def demo_select_wtf():
             """
             genre_val_list_dropdown = []
             for i in data_genres:
-                genre_val_list_dropdown.append(i['user_name'])
+                genre_val_list_dropdown.append(i['nom_categorie'])
 
             # Aussi possible d'avoir un id numérique et un texte en correspondance
-            # genre_val_list_dropdown = [(i["id_User"], i["user_name"]) for i in data_genres]
+            # genre_val_list_dropdown = [(i["id_categorie"], i["nom_categorie"]) for i in data_genres]
 
             print("genre_val_list_dropdown ", genre_val_list_dropdown)
 

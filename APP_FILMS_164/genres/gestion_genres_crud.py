@@ -248,9 +248,9 @@ def genre_delete_wtf():
                 print("valeur_delete_dictionnaire ", valeur_delete_dictionnaire)
 
                 str_sql_delete_films_genre = """DELETE FROM t_categoriesDepense WHERE fk_categories = %(value_id_genre)s"""
-                str_sql_delete_idgenre = """DELETE FROM t_categories     WHERE id_categories = %(value_id_genre)s"""
-                # Manière brutale d'effacer d'abord la "fk_genre", même si elle n'existe pas dans la "t_genre_film"
-                # Ensuite on peut effacer le genre vu qu'il n'est plus "lié" (INNODB) dans la "t_genre_film"
+                str_sql_delete_idgenre = """DELETE FROM t_categories     WHERE id_categorie = %(value_id_genre)s"""
+                # Manière brutale d'effacer d'abord la "fk_categories", même si elle n'existe pas dans la "t_categories_depense"
+                # Ensuite on peut effacer le genre vu qu'il n'est plus "lié" (INNODB) dans la "t_categories_depense"
                 with DBconnection() as mconn_bd:
                     mconn_bd.execute(str_sql_delete_films_genre, valeur_delete_dictionnaire)
                     mconn_bd.execute(str_sql_delete_idgenre, valeur_delete_dictionnaire)
@@ -276,7 +276,7 @@ def genre_delete_wtf():
                 session['data_films_attribue_genre_delete'] = data_films_attribue_genre_delete
 
                 # Opération sur la BD pour récupérer "id_genre" et "intitule_genre" de la "t_genre"
-                str_sql_id_genre = "SELECT id_categories, name_categories FROM t_categories WHERE id_categories = %(value_id_genre)s"
+                str_sql_id_genre = "SELECT id_categorie, name_categories FROM t_categories WHERE id_categorie = %(value_id_genre)s"
 
                 mydb_conn.execute(str_sql_id_genre, valeur_select_dictionnaire)
                 # Une seule valeur est suffisante "fetchone()",
