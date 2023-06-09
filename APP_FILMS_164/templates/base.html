@@ -60,10 +60,14 @@
 						</ul>
 					</li>
 					<li class="nav-item">
-						<!--		Afficher la liste des personne dans l'ordre (ASC) et tous les personne (0)-->
-						<a class="nav-link" href="{{ url_for('genres_afficher', order_by='ASC', id_genre_sel=0) }}">personne</a>
+						<a class="nav-link" href="{{ url_for('personnes_afficher', order_by='ASC', id_genre_sel=0) }}">Personnes</a>
 					</li>
-
+					 <li class="nav-item">
+						<a class="nav-link" href="{{ url_for('adresses_afficher', order_by='ASC', id_genre_sel=0) }}">Adresses</a>
+					</li>
+                    <li class="nav-item">
+						<a class="nav-link" href="{{ url_for('emails_afficher', order_by='ASC', id_genre_sel=0) }}">Emails</a>
+					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="{{ url_for('personnes_taille_dict') }}">Démo "TAILLE"</a>
 					</li>
