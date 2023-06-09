@@ -17,7 +17,7 @@ class FormWTFAddFilm(FlaskForm):
         Définition d'un "bouton" submit avec un libellé personnalisé.
     """
     nom_film_regexp = ""
-    nom_film_add_wtf = IntegerField("montant (max 10000)", validators=[NumberRange(min=1, max=10000,
+    nom_film_add_wtf = IntegerField("montant (max 1000000)", validators=[NumberRange(min=1, max=10000,
                                                                                             message=u"Min %(min)d et "
                                                                                                     u"max %(max)d "
                                                                                                     u"Selon Wikipédia "
@@ -26,6 +26,7 @@ class FormWTFAddFilm(FlaskForm):
                                                                                                     u"Lotus rouge "
                                                                                                     u"durée 1620 "
                                                                                                     u"min")])
+
     submit = SubmitField("Enregistrer le montant")
 
 

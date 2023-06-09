@@ -221,7 +221,7 @@ def update_genre_film_selected():
 
             # SQL pour insérer une nouvelle association entre
             # "fk_depense"/"id_depense" et "fk_categories"/"id_categorie" dans la "t_categories_depense"
-            strsql_insert_genre_film = """INSERT INTO t_categories_depense (id_genre_film, fk_categories, fk_depense)
+            strsql_insert_genre_film = """INSERT INTO t_categories_depense (id_categories_depense,fk_categories, fk_depense)
                                                     VALUES (NULL, %(value_fk_genre)s, %(value_fk_film)s)"""
 
             # SQL pour effacer une (des) association(s) existantes entre "id_depense" et "id_categorie" dans la "t_categories_depense"
@@ -276,7 +276,7 @@ def genres_films_afficher_data(valeur_id_film_selected_dict):
     print("valeur_id_film_selected_dict...", valeur_id_film_selected_dict)
     try:
 
-        strsql_film_selected = """SELECT id_depense, montant, date_depense, description, cover_link_film, date_sortie_film, GROUP_CONCAT(id_categorie) as GenresFilms FROM t_categories_depense
+        strsql_film_selected = """SELECT id_depense, montant, date_depense, description, GROUP_CONCAT(id_categorie) as GenresFilms FROM t_categories_depense
                                         INNER JOIN t_depense ON t_depense.id_depense = t_categories_depense.fk_depense
                                         INNER JOIN t_categories ON t_categories.id_categorie = t_categories_depense.fk_categories
                                         WHERE id_depense = %(value_id_film_selected)s"""

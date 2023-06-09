@@ -247,10 +247,10 @@ def genre_delete_wtf():
                 valeur_delete_dictionnaire = {"value_id_genre": id_genre_delete}
                 print("valeur_delete_dictionnaire ", valeur_delete_dictionnaire)
 
-                str_sql_delete_films_genre = """DELETE FROM t_categoriesDepense WHERE fk_categories = %(value_id_genre)s"""
-                str_sql_delete_idgenre = """DELETE FROM t_categories     WHERE id_categorie = %(value_id_genre)s"""
-                # Manière brutale d'effacer d'abord la "fk_categories", même si elle n'existe pas dans la "t_categories_depense"
-                # Ensuite on peut effacer le genre vu qu'il n'est plus "lié" (INNODB) dans la "t_categories_depense"
+                str_sql_delete_films_genre = """DELETE FROM t_categories_depense WHERE fk_categories = %(value_id_genre)s"""
+                str_sql_delete_idgenre = """DELETE FROM t_categories WHERE id_categorie = %(value_id_genre)s"""
+                # Manière brutale d'effacer d'abord la "fk_genre", même si elle n'existe pas dans la "t_genre_film"
+                # Ensuite on peut effacer le genre vu qu'il n'est plus "lié" (INNODB) dans la "t_genre_film"
                 with DBconnection() as mconn_bd:
                     mconn_bd.execute(str_sql_delete_films_genre, valeur_delete_dictionnaire)
                     mconn_bd.execute(str_sql_delete_idgenre, valeur_delete_dictionnaire)
@@ -266,6 +266,11 @@ def genre_delete_wtf():
             print(id_genre_delete, type(id_genre_delete))
 
             # Requête qui affiche tous les films_genres qui ont le genre que l'utilisateur veut effacer
+            str_sql_genres_films_delete = """SELECT id_categories_depense, nom_categorie, id_categorie FROM t_categories_depense 
+                                            INNER JOIN t_depense ON t_categories_depense.fk_depense = t_depense.id_depense
+                                            INNER JOIN t_categories ON t_categories_depense.fk_categories = t_categories.id_categorie
+                                            WHERE fk_categories = %(value_id_genre)s"""
+
             with DBconnection() as mydb_conn:
                 mydb_conn.execute(str_sql_genres_films_delete, valeur_select_dictionnaire)
                 data_films_attribue_genre_delete = mydb_conn.fetchall()
@@ -276,17 +281,17 @@ def genre_delete_wtf():
                 session['data_films_attribue_genre_delete'] = data_films_attribue_genre_delete
 
                 # Opération sur la BD pour récupérer "id_genre" et "intitule_genre" de la "t_genre"
-                str_sql_id_genre = "SELECT id_categorie, name_categories FROM t_categories WHERE id_categorie = %(value_id_genre)s"
+                str_sql_id_genre = "SELECT id_categorie, nom_categorie FROM t_categories WHERE id_categorie = %(value_id_genre)s"
 
                 mydb_conn.execute(str_sql_id_genre, valeur_select_dictionnaire)
                 # Une seule valeur est suffisante "fetchone()",
                 # vu qu'il n'y a qu'un seul champ "nom genre" pour l'action DELETE
                 data_nom_genre = mydb_conn.fetchone()
                 print("data_nom_genre ", data_nom_genre, " type ", type(data_nom_genre), " genre ",
-                      data_nom_genre["name_categories"])
+                      data_nom_genre["nom_categorie"])
 
             # Afficher la valeur sélectionnée dans le champ du formulaire "genre_delete_wtf.html"
-            form_delete.nom_genre_delete_wtf.data = data_nom_genre["name_categories"]
+            form_delete.nom_genre_delete_wtf.data = data_nom_genre["nom_categorie"]
 
             # Le bouton pour l'action "DELETE" dans le form. "genre_delete_wtf.html" est caché.
             btn_submit_del = False
