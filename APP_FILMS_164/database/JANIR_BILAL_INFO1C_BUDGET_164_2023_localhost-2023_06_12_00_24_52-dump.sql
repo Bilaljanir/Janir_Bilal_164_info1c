@@ -16,6 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `budget`
+--
+
+DROP TABLE IF EXISTS `budget`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `budget` (
+  `budget_id` int NOT NULL,
+  `nom` varchar(100) DEFAULT NULL,
+  `montant_initial` decimal(10,2) DEFAULT NULL,
+  `date_debut` date DEFAULT NULL,
+  `date_fin` date DEFAULT NULL,
+  PRIMARY KEY (`budget_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `budget`
+--
+
+LOCK TABLES `budget` WRITE;
+/*!40000 ALTER TABLE `budget` DISABLE KEYS */;
+/*!40000 ALTER TABLE `budget` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `t_adresse`
 --
 
@@ -118,7 +144,7 @@ CREATE TABLE `t_depense` (
 
 LOCK TABLES `t_depense` WRITE;
 /*!40000 ALTER TABLE `t_depense` DISABLE KEYS */;
-INSERT INTO `t_depense` VALUES (1,10000.00,'2023-06-14','test'),(2,2500.00,'2023-06-21','teste'),(3,6000.00,'2023-06-06','teste'),(4,4100.00,'2023-06-20','teest'),(5,3500.00,'2023-06-30','tetst'),(6,2050.00,'2023-06-21','testet'),(7,2223.00,'2023-06-28','fs');
+INSERT INTO `t_depense` VALUES (1,1021.00,'2023-06-14','testte'),(2,2500.00,'2023-06-21','teste'),(3,6000.00,'2023-06-06','teste'),(4,4100.00,'2023-06-20','teest'),(5,3500.00,'2023-06-30','tetst'),(6,2050.00,'2023-06-21','testet'),(7,2223.00,'2023-06-28','fs');
 /*!40000 ALTER TABLE `t_depense` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -147,30 +173,6 @@ INSERT INTO `t_email` VALUES (1,'bilal@gmail.com'),(2,'test@gmail.com');
 UNLOCK TABLES;
 
 --
--- Table structure for table `t_num_tel`
---
-
-DROP TABLE IF EXISTS `t_num_tel`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `t_num_tel` (
-  `id_num_tel` int NOT NULL AUTO_INCREMENT,
-  `num_tel` varchar(20) NOT NULL,
-  PRIMARY KEY (`id_num_tel`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `t_num_tel`
---
-
-LOCK TABLES `t_num_tel` WRITE;
-/*!40000 ALTER TABLE `t_num_tel` DISABLE KEYS */;
-INSERT INTO `t_num_tel` VALUES (1,'0779524042');
-/*!40000 ALTER TABLE `t_num_tel` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `t_personne`
 --
 
@@ -183,14 +185,11 @@ CREATE TABLE `t_personne` (
   `prenom` varchar(100) DEFAULT NULL,
   `fk_email` int DEFAULT NULL,
   `fk_adresse` int DEFAULT NULL,
-  `fk_num_tel` int DEFAULT NULL,
   PRIMARY KEY (`id_personne`),
   KEY `fk_email` (`fk_email`),
   KEY `fk_adresse` (`fk_adresse`),
-  KEY `fk_num_tel` (`fk_num_tel`),
   CONSTRAINT `t_personne_ibfk_1` FOREIGN KEY (`fk_email`) REFERENCES `t_email` (`id_email`),
-  CONSTRAINT `t_personne_ibfk_2` FOREIGN KEY (`fk_adresse`) REFERENCES `t_adresse` (`id_adresse`),
-  CONSTRAINT `t_personne_ibfk_3` FOREIGN KEY (`fk_num_tel`) REFERENCES `t_num_tel` (`id_num_tel`)
+  CONSTRAINT `t_personne_ibfk_2` FOREIGN KEY (`fk_adresse`) REFERENCES `t_adresse` (`id_adresse`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -200,8 +199,32 @@ CREATE TABLE `t_personne` (
 
 LOCK TABLES `t_personne` WRITE;
 /*!40000 ALTER TABLE `t_personne` DISABLE KEYS */;
-INSERT INTO `t_personne` VALUES (1,'bilal','janit',1,1,1),(3,'darria','bara',2,2,NULL);
+INSERT INTO `t_personne` VALUES (3,'darria','bara',2,2);
 /*!40000 ALTER TABLE `t_personne` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `transaction`
+--
+
+DROP TABLE IF EXISTS `transaction`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `transaction` (
+  `transaction_id` int NOT NULL,
+  `montant` decimal(10,2) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  PRIMARY KEY (`transaction_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `transaction`
+--
+
+LOCK TABLES `transaction` WRITE;
+/*!40000 ALTER TABLE `transaction` DISABLE KEYS */;
+/*!40000 ALTER TABLE `transaction` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -213,4 +236,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-09 19:30:57
+-- Dump completed on 2023-06-12  0:24:52

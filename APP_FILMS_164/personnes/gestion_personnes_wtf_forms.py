@@ -42,7 +42,7 @@ class FormWTFAjouterGenres(FlaskForm):
                                       validate_choice=False,
                                       coerce=int
                                       )
-    submit = SubmitField("Enregistrer technique")
+    submit = SubmitField("Enregistrer ")
 
 
 
